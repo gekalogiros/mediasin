@@ -1,0 +1,19 @@
+apply plugin: 'distribution'
+
+def mainClassName = "com.gkalogiros.mediasin.signer.Application"
+
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+dependencies {
+    compile project(':signature'),
+            'com.google.guava:guava:18.0'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
